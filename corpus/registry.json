@@ -1,5 +1,5 @@
 {
-  "caso 5 - doutrina complementar": {
+  "l8245compilado": {
     "authority": "BCB",
     "type": "resolucao",
     "number": null,
@@ -7,6 +7,48 @@
     "dataPublicacao": "2026-01-01",
     "dataVigor": "2026-01-01",
     "vigencyStatus": "vigente",
-    "description": "Caso 5   Doutrina Complementar"
+    "description": "L8245Compilado"
+  },
+  "l13455": {
+    "authority": "BCB",
+    "type": "resolucao",
+    "number": null,
+    "year": 2026,
+    "dataPublicacao": "2026-01-01",
+    "dataVigor": "2026-01-01",
+    "vigencyStatus": "vigente",
+    "description": "L13455"
+  },
+  "l14133": {
+    "authority": "BCB",
+    "type": "resolucao",
+    "number": null,
+    "year": 2026,
+    "dataPublicacao": "2026-01-01",
+    "dataVigor": "2026-01-01",
+    "vigencyStatus": "vigente",
+    "description": "L14133"
+  },
+  "lei10962-2004": {
+    "authority": "federal",
+    "type": "lei_ordinaria",
+    "number": "10962",
+    "year": 2004,
+    "dataPublicacao": "2004-10-13",
+    "dataVigor": "2004-10-13",
+    "vigencyStatus": "vigente",
+    "description": "Dispõe sobre a oferta e as formas de afixação de preços de produtos e serviços para o consumidor.",
+    "urlFonteOficial": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2004/lei/l10.962.htm"
+  },
+  "lei13455-2017": {
+    "authority": "federal",
+    "type": "lei_ordinaria",
+    "number": "13455",
+    "year": 2017,
+    "dataPublicacao": "2017-06-27",
+    "dataVigor": "2017-06-27",
+    "vigencyStatus": "vigente",
+    "description": "Dispõe sobre a diferenciação de preços de bens e serviços oferecidos ao público em função do prazo ou do instrumento de pagamento utilizado.",
+    "urlFonteOficial": "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/lei/l13455.htm"
   }
 }

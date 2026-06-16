@@ -17,6 +17,7 @@ dependencies = [
     "rich>=13.0",
     "tiktoken>=0.7",
     "psycopg[binary]>=3.1",
+    "mcp>=1.2",
 ]
 
 [project.optional-dependencies]

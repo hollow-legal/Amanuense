@@ -5,6 +5,7 @@ from .base import BaseAgent, load_prompt, console
 from ..parsers.bcb_patterns import DEFINICAO_RE, PRAZO_RE
 from ..schemas import (
     GraphNode, NodeType, EdgeType, EDGE_DEFAULT_WEIGHTS,
+    VigenciaMeta, VigencyStatus,
 )
 from ..utils.id_factory import definicao_id, papel_id, prazo_id, entidade_id, edge_id, doc_id_from_node
 from ..utils.llm_helpers import parse_json_response
@@ -115,6 +116,13 @@ class DomainAnalyzerAgent(BaseAgent):
                 if not art_text:
                     art_text = art_node.get("summary", "")
 
+                # DEFINICAO é tipo normativo: herda a vigência do artigo de origem
+                art_vigencia = art_node.get("vigenciaMeta") or VigenciaMeta(
+                    dataInicio=vigencia_inicio,
+                    status=VigencyStatus.VIGENTE,
+                    ultimaVerificacao=verificacao,
+                ).model_dump(mode="json")
+
                 # Regex-based definitions
                 for m in DEFINICAO_RE.finditer(art_text):
                     termo = m.group(1).strip().rstrip(",;.")[:60]
@@ -127,6 +135,7 @@ class DomainAnalyzerAgent(BaseAgent):
                             name=termo,
                             summary=f"Definição legal: {termo} ({doc_id})",
                             tags=[termo.lower().replace(" ", "-")[:30], "definicao"],
+                            vigenciaMeta=art_vigencia,
                         ).model_dump(mode="json")
                         node_dict["sourceDoc"] = doc_id
                         nodes.append(node_dict)
@@ -204,6 +213,7 @@ class DomainAnalyzerAgent(BaseAgent):
                                     name=termo,
                                     summary=d.get("definicao", termo),
                                     tags=[termo.lower().replace(" ", "-")[:30], "definicao"],
+                                    vigenciaMeta=art_vigencia,
                                 ).model_dump(mode="json")
                                 llm_def_dict["sourceDoc"] = doc_id
                                 nodes.append(llm_def_dict)

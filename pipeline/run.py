@@ -148,6 +148,25 @@ def initdb(with_demo: bool) -> None:
 
 
 @cli.command()
+@click.option("--http", is_flag=True, help="Transporte streamable-http em vez de stdio")
+@click.option("--host", default="0.0.0.0", show_default=True)
+@click.option("--port", default=8765, show_default=True)
+def mcp(http: bool, host: str, port: int) -> None:
+    """Servidor MCP de validação de citações legais (anti-alucinação)."""
+    import sys
+    from db.legislacao import legislacao_enabled
+
+    if not legislacao_enabled():
+        console.print("[red]ERROR:[/red] LEGISLACAO_DATABASE_URL não definida (ver .env.example)")
+        sys.exit(1)
+    from .validacao.mcp_server import serve
+
+    if http:
+        console.print(f"[bold blue]mcp[/bold blue] streamable-http em {host}:{port}")
+    serve(http=http, host=host, port=port)
+
+
+@cli.command()
 @click.argument("graph_path", default="output/knowledge-graph.json")
 def validate(graph_path: str) -> None:
     """Validate a knowledge-graph.json file."""

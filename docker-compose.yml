@@ -36,6 +36,23 @@ services:
     networks:
       - vps-proxy
 
+  amanuense-mcp:
+    build:
+      context: .
+      target: mcp
+    container_name: amanuense-mcp
+    restart: always
+    expose:
+      - "8765"
+    env_file: .env
+    environment:
+      LEGISLACAO_DATABASE_URL: postgresql://amanuense:amanuense@postgres:5432/legislacao
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - vps-proxy
+
   postgres:
     image: postgres:16-alpine
     container_name: amanuense-postgres

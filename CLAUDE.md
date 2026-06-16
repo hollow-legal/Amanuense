@@ -19,6 +19,8 @@ pipeline/agents/     # Um arquivo por agente da sequência
 pipeline/prompts/    # Prompt de sistema de cada agente (arquivo .md)
 pipeline/schemas/    # Todos os tipos Pydantic — fonte da verdade do grafo
 pipeline/graph/      # builder.py monta o grafo final a partir dos intermediários
+pipeline/parsers/    # Parsers determinísticos (canonical_tree, planalto_html...)
+pipeline/validacao/  # Validação de citações legais + servidor MCP
 pipeline/utils/claude_client.py  # LLMClient (alias ClaudeClient)
 db/sql/              # DDL canônico da base de legislação estruturada (PostgreSQL)
 db/legislacao.py     # Conexão psycopg3 + bootstrap idempotente da base
@@ -64,6 +66,14 @@ amanuense initdb                # aplica db/sql/ (idempotente); --with-demo p/ s
 
 # Converter PDFs
 python scripts/parse_pdfs.py
+
+# Extrair leis direto do HTML do Planalto (tachado removido, metadados corretos)
+python scripts/extract_lei_planalto.py --sprint1   # Lei 13.455/2017 + Lei 10.962/2004
+python scripts/extract_lei_planalto.py --url <planalto> --doc-id ... --numero ... --ano ... --publicacao YYYY-MM-DD
+
+# Servidor MCP de validação de citações (anti-alucinação; requer LEGISLACAO_DATABASE_URL)
+amanuense mcp                  # stdio — Claude Code/Desktop
+amanuense mcp --http           # streamable-http em 0.0.0.0:8765 (container amanuense-mcp no compose)
 
 # Qualidade
 pytest
